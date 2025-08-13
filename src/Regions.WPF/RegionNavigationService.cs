@@ -4,9 +4,9 @@ namespace Regions;
 
 public class RegionNavigationService : IRegionNavigationService
 {
-    public IRegion Region { get; set; } = null!;
+    public IRegion Region { get; set; }
 
-    public IRegionNavigationJournal Journal { get; set; } = null!;
+    public IRegionNavigationJournal Journal { get; set; }
 
     public event EventHandler Navigating;
 
@@ -20,8 +20,11 @@ public class RegionNavigationService : IRegionNavigationService
 
         try
         {
-            Journal.RecordNavigation((uri, navigationParameters)!, true);
             Journal.NavigationTarget.RequestNavigate(uri, navigationParameters);
+            Journal.RecordNavigation((uri, navigationParameters), Journal.CurrentEntry != (default, default));
+            if (navigationParameters is NavigationParameters parameters)
+                if (!parameters.Redirect)
+                    Journal.Clear();
             Navigated?.Invoke(this, EventArgs.Empty);
         }
         catch

@@ -26,8 +26,6 @@ public class Region(IServiceProvider serviceProvider) : IRegion
 
     public IRegionManager RegionManager => (IRegionManager)_serviceProvider.GetService(typeof(IRegionManager));
 
-    public event PropertyChangedEventHandler PropertyChanged;
-
     public IRegionManager Add(object view, string viewName)
     {
         _views[viewName] = view;

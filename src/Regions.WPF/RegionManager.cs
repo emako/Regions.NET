@@ -43,6 +43,17 @@ public partial class RegionManager : IRegionManager
             journal.GoBack();
         }
     }
+
+    public void RequestNavigateForward(string regionName)
+    {
+        if (RegionDictionary.TryGetValue(regionName, out IRegion region) &&
+            region.NavigationService is RegionNavigationService navService &&
+            navService.Journal is { } journal &&
+            journal.CanGoForward)
+        {
+            journal.GoForward();
+        }
+    }
 }
 
 public partial class RegionManager

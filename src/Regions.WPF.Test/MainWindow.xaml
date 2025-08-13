@@ -25,21 +25,28 @@
                 Height="40"
                 Margin="10"
                 Click="BtnA_Click"
-                Content="显示A" />
+                Content="ShowA" />
             <Button
                 x:Name="BtnB"
                 Width="120"
                 Height="40"
                 Margin="10"
                 Click="BtnB_Click"
-                Content="显示B" />
+                Content="ShowB" />
             <Button
                 x:Name="BtnBack"
                 Width="120"
                 Height="40"
                 Margin="10"
                 Click="BtnBack_Click"
-                Content="后退" />
+                Content="GoBack" />
+            <Button
+                x:Name="BtnForward"
+                Width="120"
+                Height="40"
+                Margin="10"
+                Click="BtnForward_Click"
+                Content="GoForward" />
         </StackPanel>
         <ContentControl
             x:Name="RegionContent"

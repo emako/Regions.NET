@@ -26,4 +26,9 @@ public partial class MainWindow : Window
     {
         _regionManager?.RequestNavigateBack("MainRegion");
     }
+
+    private void BtnForward_Click(object sender, RoutedEventArgs e)
+    {
+        _regionManager?.RequestNavigateForward("MainRegion");
+    }
 }

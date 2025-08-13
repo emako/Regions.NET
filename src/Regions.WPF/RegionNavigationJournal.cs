@@ -33,8 +33,10 @@ public class RegionNavigationJournal : IRegionNavigationJournal
         }
     }
 
-    public void RecordNavigation(ValueTuple<Uri, object> entry, bool persistInHistory)
+    public void RecordNavigation((Uri, object) entry, bool persistInHistory)
     {
+        if (entry == (default, default))
+            return;
         if (Equals(CurrentEntry, entry))
             return;
         if (persistInHistory)

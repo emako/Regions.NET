@@ -25,8 +25,8 @@ public partial class App : Application, IServiceProvider
         var services = new ServiceCollection();
         services.AddSingleton<IRegionManager, RegionManager>();
         services.AddSingleton<INavigationRegistry, NavigationRegistry>();
-        services.AddTransient<PageA>();
-        services.AddTransient<PageB>();
+        services.AddSingleton<PageA>();
+        services.AddSingleton<PageB>();
 
         ServiceProvider = services.BuildServiceProvider()
             .UseRegionServiceProvider()

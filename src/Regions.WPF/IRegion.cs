@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Regions;
 
-public interface IRegion : INavigateAsync, INotifyPropertyChanged
+public interface IRegion : INavigateAsync
 {
     public string Name { get; set; }
 
