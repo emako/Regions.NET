@@ -14,7 +14,7 @@ public interface IRegion : INavigateAsync
 
     public void Remove(object view);
 
-    public void RemoveAll();
+    public void Clear();
 
     public object GetView(string viewName);
 

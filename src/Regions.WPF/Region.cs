@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Regions;
 
@@ -19,6 +18,7 @@ public class Region(IServiceProvider serviceProvider) : IRegion
         {
             Journal = new RegionNavigationJournal()
             {
+                Region = this,
                 NavigationTarget = new RegionAdapter(this, _serviceProvider),
             },
         };
@@ -41,7 +41,7 @@ public class Region(IServiceProvider serviceProvider) : IRegion
         }
     }
 
-    public void RemoveAll()
+    public void Clear()
     {
         _views.Clear();
     }

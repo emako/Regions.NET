@@ -1,4 +1,6 @@
-﻿namespace Regions;
+﻿using System;
+
+namespace Regions;
 
 public interface INavigationParameters
 {

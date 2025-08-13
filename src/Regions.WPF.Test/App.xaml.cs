@@ -6,27 +6,28 @@ namespace Regions.Test;
 
 public partial class App : Application, IServiceProvider
 {
-    public static IServiceProvider ServiceProvider { get; private set; }
+    public static IServiceProvider? ServiceProvider { get; private set; }
 
     public object? GetService(Type serviceType)
     {
-        return ServiceProvider.GetService(serviceType);
+        return ServiceProvider!.GetService(serviceType);
     }
 
     public T GetRequiredService<T>() where T : notnull
     {
-        return ServiceProvider.GetRequiredService<T>();
+        return ServiceProvider!.GetRequiredService<T>();
     }
 
     protected override void OnStartup(StartupEventArgs e)
     {
         base.OnStartup(e);
 
-        var services = new ServiceCollection();
+        IServiceCollection services = new ServiceCollection();
+        services.AddSingleton(services);
         services.AddSingleton<IRegionManager, RegionManager>();
         services.AddSingleton<INavigationRegistry, NavigationRegistry>();
-        services.AddSingleton<PageA>();
-        services.AddSingleton<PageB>();
+        services.AddTransient<PageA>();
+        services.AddTransient<PageB>();
 
         ServiceProvider = services.BuildServiceProvider()
             .UseRegionServiceProvider()

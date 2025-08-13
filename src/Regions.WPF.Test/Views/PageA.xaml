@@ -11,5 +11,13 @@
             FontWeight="Bold"
             Foreground="White"
             Text="A" />
+        <TextBlock
+            Margin="0,150,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="30"
+            FontWeight="Bold"
+            Foreground="White"
+            Text="{Binding Datetime}" />
     </Grid>
 </UserControl>

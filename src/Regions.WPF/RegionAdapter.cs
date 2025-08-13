@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Xml.Linq;
 
 namespace Regions;
 
@@ -13,6 +12,10 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
 
     public void RequestNavigate(Uri uri, object navigationParameters)
     {
+        if (navigationParameters is INavigationParameters parameters)
+            if (parameters.Redirect)
+                _region.Clear();
+
         object content = Resolve(uri);
 
         if (_region.Container is ContentControl contentControl)
@@ -115,7 +118,11 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
             return view;
         else if (_serviceProvider.GetService(typeof(INavigationRegistry)) is INavigationRegistry registry)
             if (registry.GetViewType(uri?.OriginalString) is Type type)
-                return _serviceProvider.GetService(type);
+            {
+                view = _serviceProvider.GetService(type);
+                _region.Add(view, uri.OriginalString);
+                return view;
+            }
         return null;
     }
 }

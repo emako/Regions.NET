@@ -22,9 +22,6 @@ public class RegionNavigationService : IRegionNavigationService
         {
             Journal.NavigationTarget.RequestNavigate(uri, navigationParameters);
             Journal.RecordNavigation((uri, navigationParameters), Journal.CurrentEntry != (default, default));
-            if (navigationParameters is NavigationParameters parameters)
-                if (!parameters.Redirect)
-                    Journal.Clear();
             Navigated?.Invoke(this, EventArgs.Empty);
         }
         catch
