@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
+		<UseWPF>true</UseWPF>
+		<Nullable>disable</Nullable>
+		<RootNamespace>Regions</RootNamespace>
+		<LangVersion>preview</LangVersion>
+	</PropertyGroup>
+
+</Project>

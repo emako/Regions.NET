@@ -1,0 +1,15 @@
+<UserControl
+    x:Class="Regions.Test.Views.PageA"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="LightSkyBlue">
+    <Grid>
+        <TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="120"
+            FontWeight="Bold"
+            Foreground="White"
+            Text="A" />
+    </Grid>
+</UserControl>

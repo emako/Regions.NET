@@ -1,0 +1,75 @@
+using System;
+using System.Collections.Generic;
+using System.Windows;
+
+namespace Regions;
+
+public partial class RegionManager : IRegionManager
+{
+    public Dictionary<string, IRegion> RegionDictionary = [];
+    public IEnumerable<object> Regions => RegionDictionary.Values;
+
+    public IRegionManager AddToRegion(string regionName, object view)
+    {
+        if (RegionDictionary.TryGetValue(regionName, out IRegion region))
+        {
+            region.Add(view, regionName);
+        }
+        else
+        {
+            if (Application.Current is IServiceProvider serviceProvider)
+            {
+                RegionDictionary.Add(regionName, view as IRegion);
+            }
+        }
+        return this;
+    }
+
+    public void RequestNavigate(string regionName, Uri target, object navigationParameters)
+    {
+        if (RegionDictionary.TryGetValue(regionName, out IRegion region))
+        {
+            region.RequestNavigate(target, navigationParameters);
+        }
+    }
+
+    public void RequestNavigateBack(string regionName)
+    {
+        if (RegionDictionary.TryGetValue(regionName, out IRegion region) &&
+            region.NavigationService is RegionNavigationService navService &&
+            navService.Journal is { } journal &&
+            journal.CanGoBack)
+        {
+            journal.GoBack();
+        }
+    }
+}
+
+public partial class RegionManager
+{
+    public static readonly DependencyProperty RegionNameProperty =
+        DependencyProperty.RegisterAttached("RegionName", typeof(string), typeof(RegionManager), new(null, OnRegionNameChanged));
+
+    public static string GetRegionName(DependencyObject obj)
+        => (string)obj.GetValue(RegionNameProperty);
+
+    public static void SetRegionName(DependencyObject obj, string value)
+        => obj.SetValue(RegionNameProperty, value);
+
+    private static void OnRegionNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue is string regionName && !string.IsNullOrEmpty(regionName))
+        {
+            if (Application.Current is IServiceProvider serviceProvider)
+            {
+                Region region = new(serviceProvider)
+                {
+                    Name = regionName,
+                    Container = d,
+                };
+                IRegionManager regionManager = (IRegionManager)serviceProvider.GetService(typeof(IRegionManager));
+                regionManager.AddToRegion(regionName, region);
+            }
+        }
+    }
+}
