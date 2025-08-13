@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -25,7 +26,7 @@ public partial class RegionManager : IRegionManager
         return this;
     }
 
-    public void RequestNavigate(string regionName, Uri target, object navigationParameters)
+    public void RequestNavigate(string regionName, Uri target, object navigationParameters = null)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))
         {
@@ -33,23 +34,53 @@ public partial class RegionManager : IRegionManager
         }
     }
 
-    public void RequestNavigateBack(string regionName)
+    public void RequestRedirect(string regionName, Uri target, object navigationParameters = null)
     {
-        if (RegionDictionary.TryGetValue(regionName, out IRegion region) &&
-            region.NavigationService is RegionNavigationService navService &&
-            navService.Journal is { } journal &&
-            journal.CanGoBack)
+        if (RegionDictionary.TryGetValue(regionName, out IRegion region))
         {
+            region.Clear();
+
+            if (region.NavigationService is IRegionNavigationService navigationService
+                && navigationService.Journal is { } journal)
+            {
+                journal.Clear();
+            }
+        }
+
+        RequestNavigate(regionName, target, navigationParameters);
+    }
+
+    public void RequestGoBack(string regionName)
+    {
+        if (RegionDictionary.TryGetValue(regionName, out IRegion region)
+            && region.NavigationService is IRegionNavigationService navigationService
+            && navigationService.Journal is { } journal
+            && journal.CanGoBack)
+        {
+            if (RegionServiceProvider.ServiceProvider is IServiceProvider serviceProvider)
+            {
+                if (serviceProvider.GetService(typeof(IServiceCollection)) is IServiceCollection services
+                    && serviceProvider.GetService(typeof(INavigationRegistry)) is INavigationRegistry registry)
+                {
+                    Type type = registry.GetViewType(journal.CurrentEntry.Item1.OriginalString);
+                    ServiceLifetime? lifeTime = services.GetLifetime(type);
+
+                    if (lifeTime == ServiceLifetime.Transient)
+                    {
+                        region.Remove(region.GetView(journal.CurrentEntry.Item1.OriginalString));
+                    }
+                }
+            }
             journal.GoBack();
         }
     }
 
-    public void RequestNavigateForward(string regionName)
+    public void RequestGoForward(string regionName)
     {
-        if (RegionDictionary.TryGetValue(regionName, out IRegion region) &&
-            region.NavigationService is RegionNavigationService navService &&
-            navService.Journal is { } journal &&
-            journal.CanGoForward)
+        if (RegionDictionary.TryGetValue(regionName, out IRegion region)
+            && region.NavigationService is IRegionNavigationService navigationService
+            && navigationService.Journal is { } journal
+            && journal.CanGoForward)
         {
             journal.GoForward();
         }

@@ -24,11 +24,16 @@ public partial class MainWindow : Window
 
     private void BtnBack_Click(object sender, RoutedEventArgs e)
     {
-        _regionManager?.RequestNavigateBack("MainRegion");
+        _regionManager?.RequestGoBack("MainRegion");
     }
 
     private void BtnForward_Click(object sender, RoutedEventArgs e)
     {
-        _regionManager?.RequestNavigateForward("MainRegion");
+        _regionManager?.RequestGoForward("MainRegion");
+    }
+
+    private void BtnRedirect_Click(object sender, RoutedEventArgs e)
+    {
+        _regionManager?.RequestRedirect("MainRegion", new Uri("/PageA", UriKind.Relative));
     }
 }

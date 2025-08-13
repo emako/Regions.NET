@@ -25,14 +25,21 @@
                 Height="40"
                 Margin="10"
                 Click="BtnA_Click"
-                Content="ShowA" />
+                Content="Navigate A" />
             <Button
                 x:Name="BtnB"
                 Width="120"
                 Height="40"
                 Margin="10"
                 Click="BtnB_Click"
-                Content="ShowB" />
+                Content="Navigate B" />
+            <Button
+                x:Name="BtnRedirect"
+                Width="120"
+                Height="40"
+                Margin="10"
+                Click="BtnRedirect_Click"
+                Content="Redirect A" />
             <Button
                 x:Name="BtnBack"
                 Width="120"

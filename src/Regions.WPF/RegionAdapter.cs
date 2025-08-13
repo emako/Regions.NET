@@ -12,10 +12,6 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
 
     public void RequestNavigate(Uri uri, object navigationParameters)
     {
-        if (navigationParameters is INavigationParameters parameters)
-            if (parameters.Redirect)
-                _region.Clear();
-
         object content = Resolve(uri);
 
         if (_region.Container is ContentControl contentControl)

@@ -26,8 +26,8 @@ public partial class App : Application, IServiceProvider
         services.AddSingleton(services);
         services.AddSingleton<IRegionManager, RegionManager>();
         services.AddSingleton<INavigationRegistry, NavigationRegistry>();
-        services.AddTransient<PageA>();
-        services.AddTransient<PageB>();
+        services.AddScoped<PageA>();
+        services.AddScoped<PageB>();
 
         ServiceProvider = services.BuildServiceProvider()
             .UseRegionServiceProvider()

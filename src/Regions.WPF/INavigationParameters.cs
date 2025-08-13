@@ -1,8 +1,3 @@
-﻿using System;
+﻿namespace Regions;
 
-namespace Regions;
-
-public interface INavigationParameters
-{
-    public bool Redirect { get; set; }
-}
+public interface INavigationParameters;

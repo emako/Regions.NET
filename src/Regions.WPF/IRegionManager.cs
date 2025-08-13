@@ -11,7 +11,9 @@ public interface IRegionManager
 
     public void RequestNavigate(string regionName, Uri target, object navigationParameters = null);
 
-    public void RequestNavigateBack(string regionName);
+    public void RequestRedirect(string regionName, Uri target, object navigationParameters = null);
 
-    public void RequestNavigateForward(string regionName);
+    public void RequestGoBack(string regionName);
+
+    public void RequestGoForward(string regionName);
 }

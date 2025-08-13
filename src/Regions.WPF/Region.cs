@@ -18,7 +18,6 @@ public class Region(IServiceProvider serviceProvider) : IRegion
         {
             Journal = new RegionNavigationJournal()
             {
-                Region = this,
                 NavigationTarget = new RegionAdapter(this, _serviceProvider),
             },
         };
