@@ -137,7 +137,6 @@ public partial class RegionManager
                         .FirstOrDefault() as IRegion;
 
                     region?.Add(d, uriOriginalString);
-                    region?.RequestNavigate(new Uri(uriOriginalString, UriKind.RelativeOrAbsolute), null);
                 }
             }
         }
