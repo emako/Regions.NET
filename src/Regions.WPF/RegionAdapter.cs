@@ -16,11 +16,11 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
 
         if (_region.Container is ContentControl contentControl)
         {
-            if (contentControl.Content is INavigationAware navFrom)
-                navFrom.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
-            else if (contentControl.Content is FrameworkElement fe
-                && fe.DataContext is INavigationAware navFromVM)
-                navFromVM.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+            if (contentControl.Content is INavigationAware navigationAwareView)
+                navigationAwareView.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+            else if (contentControl.Content is FrameworkElement frameworkElement
+                && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
+                navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
 
             contentControl.Content = content;
         }
@@ -30,11 +30,11 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
             {
                 foreach (UIElement elementEach in grid.Children)
                     if (elementEach.Visibility == Visibility.Visible)
-                        if (elementEach is INavigationAware navFrom)
-                            navFrom.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
-                        else if (elementEach is FrameworkElement fe
-                            && fe.DataContext is INavigationAware navFromVM)
-                            navFromVM.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+                        if (elementEach is INavigationAware navigationAwareView)
+                            navigationAwareView.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+                        else if (elementEach is FrameworkElement frameworkElement
+                            && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
+                            navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
 
                 if (!grid.Children.Contains(element))
                     grid.Children.Add(element);
@@ -47,11 +47,11 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
 
                 foreach (UIElement elementEach in grid.Children)
                     if (elementEach.Visibility == Visibility.Visible)
-                        if (elementEach is INavigationAware navFrom)
-                            navFrom.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
-                        else if (elementEach is FrameworkElement fe
-                            && fe.DataContext is INavigationAware navFromVM)
-                            navFromVM.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
+                        if (elementEach is INavigationAware navigationAwareView)
+                            navigationAwareView.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
+                        else if (elementEach is FrameworkElement frameworkElement
+                            && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
+                            navigationAwareViewModel.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
             }
         }
         else if (_region.Container is StackPanel stackPanel)
@@ -60,11 +60,11 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
             {
                 foreach (UIElement elementEach in stackPanel.Children)
                     if (elementEach.Visibility == Visibility.Visible)
-                        if (elementEach is INavigationAware navFrom)
-                            navFrom.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
-                        else if (elementEach is FrameworkElement fe
-                            && fe.DataContext is INavigationAware navFromVM)
-                            navFromVM.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+                        if (elementEach is INavigationAware navigationAwareView)
+                            navigationAwareView.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+                        else if (elementEach is FrameworkElement frameworkElement
+                            && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
+                            navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
 
                 if (!stackPanel.Children.Contains(element))
                     stackPanel.Children.Add(element);
@@ -77,11 +77,11 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
 
                 foreach (UIElement elementEach in stackPanel.Children)
                     if (elementEach.Visibility == Visibility.Visible)
-                        if (elementEach is INavigationAware navFrom)
-                            navFrom.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
-                        else if (elementEach is FrameworkElement fe
-                            && fe.DataContext is INavigationAware navFromVM)
-                            navFromVM.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
+                        if (elementEach is INavigationAware navigationAwareView)
+                            navigationAwareView.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
+                        else if (elementEach is FrameworkElement frameworkElement
+                            && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
+                            navigationAwareViewModel.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
             }
         }
         else if (_region.Container is ItemsControl itemsControl)
@@ -91,19 +91,22 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
         }
         else if (_region.Container is Frame frame)
         {
-            if (frame.Content is INavigationAware navFrom)
-                navFrom.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
-            else if (frame.Content is FrameworkElement fe
-                && fe.DataContext is INavigationAware navFromVM)
-                navFromVM.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+            if (frame.Content is INavigationAware navigationAwareView)
+                navigationAwareView.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+            else if (frame.Content is FrameworkElement frameworkElement
+                && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
+                navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
 
             frame.Navigate(content);
         }
 
-        if (content is INavigationAware navTo)
-            navTo.OnNavigatedTo((uri, navigationParameters));
-        else if (content is FrameworkElement fe2 && fe2.DataContext is INavigationAware navToVM)
-            navToVM.OnNavigatedTo((uri, navigationParameters));
+        {
+            if (content is INavigationAware navigationAwareView)
+                navigationAwareView.OnNavigatedTo((uri, navigationParameters));
+            else if (content is FrameworkElement frameworkElement
+                && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
+                navigationAwareViewModel.OnNavigatedTo((uri, navigationParameters));
+        }
     }
 
     public object Resolve(Uri uri)

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 
 namespace Regions;
@@ -102,7 +103,7 @@ public partial class RegionManager
     {
         if (e.NewValue is string regionName && !string.IsNullOrEmpty(regionName))
         {
-            if (Application.Current is IServiceProvider serviceProvider)
+            if (RegionServiceProvider.ServiceProvider is IServiceProvider serviceProvider)
             {
                 Region region = new(serviceProvider)
                 {
@@ -111,6 +112,40 @@ public partial class RegionManager
                 };
                 IRegionManager regionManager = (IRegionManager)serviceProvider.GetService(typeof(IRegionManager));
                 regionManager.AddToRegion(regionName, region);
+            }
+        }
+    }
+
+    public static readonly DependencyProperty AddToRegionProperty =
+        DependencyProperty.RegisterAttached("AddToRegion", typeof(string), typeof(RegionManager), new(null, OnAddToRegionChanged));
+
+    public static string GetAddToRegion(DependencyObject obj)
+        => (string)obj.GetValue(AddToRegionProperty);
+
+    public static void SetAddToRegion(DependencyObject obj, string value)
+        => obj.SetValue(AddToRegionProperty, value);
+
+    private static void OnAddToRegionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.NewValue is string regionNameAndUriOriginalString && !string.IsNullOrEmpty(regionNameAndUriOriginalString))
+        {
+            string[] parts = regionNameAndUriOriginalString.Split('|', ',');
+
+            if (parts.Length >= 2)
+            {
+                string regionName = parts[0];
+                string uriOriginalString = parts[1];
+
+                if (RegionServiceProvider.ServiceProvider is IServiceProvider serviceProvider)
+                {
+                    IRegionManager regionManager = (IRegionManager)serviceProvider.GetService(typeof(IRegionManager));
+                    IRegion region = regionManager.Regions
+                        .Where(item => item is IRegion region && region.Name == regionName)
+                        .FirstOrDefault() as IRegion;
+
+                    region.Add(d, uriOriginalString);
+                    region.RequestNavigate(new Uri(uriOriginalString, UriKind.RelativeOrAbsolute), null);
+                }
             }
         }
     }

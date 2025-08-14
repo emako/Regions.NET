@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:Regions.Test"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:regions="urn:regions"
+    xmlns:view="clr-namespace:Regions.Test.Views"
     Title="MainWindow"
     Width="800"
     Height="450"
@@ -58,6 +59,8 @@
         <ContentControl
             x:Name="RegionContent"
             Grid.Row="1"
-            regions:RegionManager.RegionName="MainRegion" />
+            regions:RegionManager.RegionName="MainRegion">
+            <view:PageA regions:RegionManager.AddToRegion="MainRegion,/PageA" />
+        </ContentControl>
     </Grid>
 </Window>
