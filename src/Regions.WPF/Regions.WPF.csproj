@@ -1,13 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<PackageId>Regions.WPF</PackageId>
+		<Product>Regions.WPF</Product>
 		<TargetFrameworks>net462;net472;net48;net5.0-windows;net6.0-windows;net7.0-windows;net8.0-windows;net9.0-windows</TargetFrameworks>
 		<UseWPF>true</UseWPF>
+		<AssemblyName>Regions.WPF</AssemblyName>
 		<Nullable>disable</Nullable>
+		<SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
 		<RootNamespace>Regions</RootNamespace>
 		<LangVersion>preview</LangVersion>
+		<AssemblyVersion>0.0.1.0</AssemblyVersion>
+		<FileVersion>0.0.1.0-beta</FileVersion>
+		<Version>$(VersionPrefix)0.0.1.0</Version>
+		<Authors>ema</Authors>
+		<Company>ema</Company>
+		<Description>Prism-like Regions in .NET XAML markup.</Description>
+		<PackageProjectUrl>https://github.com/emako/Regions.NET</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/emako/Regions.NET</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>.NET WPF Regions</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>logo.png</PackageIcon>
 	</PropertyGroup>
-	
+
+	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="" />
+		<None Include="..\..\assets\logo.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
 		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 	</ItemGroup>
