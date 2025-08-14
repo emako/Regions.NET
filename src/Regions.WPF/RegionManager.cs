@@ -14,16 +14,9 @@ public partial class RegionManager : IRegionManager
     public IRegionManager AddToRegion(string regionName, object view)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))
-        {
             region.Add(view, regionName);
-        }
         else
-        {
-            if (Application.Current is IServiceProvider serviceProvider)
-            {
-                RegionDictionary.Add(regionName, view as IRegion);
-            }
-        }
+            RegionDictionary.Add(regionName, view as IRegion);
         return this;
     }
 
@@ -139,12 +132,12 @@ public partial class RegionManager
                 if (RegionServiceProvider.ServiceProvider is IServiceProvider serviceProvider)
                 {
                     IRegionManager regionManager = (IRegionManager)serviceProvider.GetService(typeof(IRegionManager));
-                    IRegion region = regionManager.Regions
+                    IRegion region = regionManager?.Regions
                         .Where(item => item is IRegion region && region.Name == regionName)
                         .FirstOrDefault() as IRegion;
 
-                    region.Add(d, uriOriginalString);
-                    region.RequestNavigate(new Uri(uriOriginalString, UriKind.RelativeOrAbsolute), null);
+                    region?.Add(d, uriOriginalString);
+                    region?.RequestNavigate(new Uri(uriOriginalString, UriKind.RelativeOrAbsolute), null);
                 }
             }
         }
