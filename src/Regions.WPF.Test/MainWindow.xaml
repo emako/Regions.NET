@@ -56,11 +56,17 @@
                 Click="BtnForward_Click"
                 Content="GoForward" />
         </StackPanel>
+        <!--  Test ContentControl  -->
         <ContentControl
-            x:Name="RegionContent"
             Grid.Row="1"
-            regions:RegionManager.RegionName="MainRegion">
+            regions:RegionManager.RegionName="MainRegion"
+            Visibility="Collapsed">
             <view:PageA regions:RegionManager.AddToRegion="MainRegion,/PageA" />
         </ContentControl>
+        <!--  Test Grid  -->
+        <Grid Grid.Row="1" regions:RegionManager.RegionName="MainGridRegion">
+            <view:PageA regions:RegionManager.AddToRegion="MainGridRegion,/PageAa" />
+            <view:PageB regions:RegionManager.AddToRegion="MainGridRegion,/PageBa" Visibility="Collapsed" />
+        </Grid>
     </Grid>
 </Window>
