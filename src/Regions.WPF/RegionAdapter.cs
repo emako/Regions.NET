@@ -19,6 +19,9 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
     {
         object content = Resolve(uri);
 
+        if (content is DependencyObject dp)
+            RegionManager.SetRegionParameter(dp, uri.ToParameters());
+
         // ContentControl: set Content property to the resolved view
         if (_region.Container is ContentControl contentControl)
         {
@@ -125,15 +128,15 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
     /// </summary>
     public object Resolve(Uri uri)
     {
-        object view = _region.GetView(uri?.OriginalString);
+        object view = _region.GetView(uri?.ToKey());
 
         if (view is not null)
             return view;
         else if (_serviceProvider.GetService(typeof(INavigationRegistry)) is INavigationRegistry registry)
-            if (registry.GetViewType(uri?.OriginalString) is Type type)
+            if (registry.GetViewType(uri?.ToKey()) is Type type)
             {
                 view = _serviceProvider.GetService(type);
-                _region.Add(view, uri.OriginalString);
+                _region.Add(view, uri.ToKey());
                 return view;
             }
         return null;

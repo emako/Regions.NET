@@ -15,9 +15,11 @@ public partial class PageA : UserControl, INavigationAware
 
     public void OnNavigatedFrom((Uri, object) entry)
     {
+        Dictionary<string, object> value = RegionManager.GetRegionParameter(this);
     }
 
     public void OnNavigatedTo((Uri, object) entry)
     {
+        Dictionary<string, object> value = RegionManager.GetRegionParameter(this);
     }
 }

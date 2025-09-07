@@ -17,13 +17,13 @@ public partial class MainWindow : Window
     private void BtnA_Click(object sender, RoutedEventArgs e)
     {
         //_regionManager?.RequestNavigate("MainRegion", new Uri("/PageA", UriKind.Relative));
-        _regionManager?.RequestNavigate("MainGridRegion", new Uri("/GridA", UriKind.Relative));
+        _regionManager?.RequestNavigate("MainGridRegion", new Uri("/GridA?a=1&b=2", UriKind.Relative));
     }
 
     private void BtnB_Click(object sender, RoutedEventArgs e)
     {
         //_regionManager?.RequestNavigate("MainRegion", new Uri("/PageB", UriKind.Relative));
-        _regionManager?.RequestNavigate("MainGridRegion", new Uri("/GridB", UriKind.Relative));
+        _regionManager?.RequestNavigate("MainGridRegion", new Uri("/GridB?a=1&b=2", UriKind.Relative));
     }
 
     private void BtnBack_Click(object sender, RoutedEventArgs e)

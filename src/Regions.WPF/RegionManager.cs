@@ -56,12 +56,12 @@ public partial class RegionManager : IRegionManager
                 if (serviceProvider.GetService(typeof(IServiceCollection)) is IServiceCollection services
                     && serviceProvider.GetService(typeof(INavigationRegistry)) is INavigationRegistry registry)
                 {
-                    Type type = registry.GetViewType(journal.CurrentEntry.Item1.OriginalString);
+                    Type type = registry.GetViewType(journal.CurrentEntry.Item1.ToKey());
                     ServiceLifetime? lifeTime = services.GetLifetime(type);
 
                     if (lifeTime == ServiceLifetime.Transient)
                     {
-                        region.Remove(region.GetView(journal.CurrentEntry.Item1.OriginalString));
+                        region.Remove(region.GetView(journal.CurrentEntry.Item1.ToKey()));
                     }
                 }
             }
@@ -141,4 +141,14 @@ public partial class RegionManager
             }
         }
     }
+
+    // RegionParameter stores navigation parameters for each region instance
+    public static readonly DependencyProperty RegionParameterProperty =
+        DependencyProperty.RegisterAttached("RegionParameter", typeof(Dictionary<string, object>), typeof(RegionManager), new PropertyMetadata(null));
+
+    public static Dictionary<string, object> GetRegionParameter(DependencyObject obj)
+        => (Dictionary<string, object>)obj.GetValue(RegionParameterProperty);
+
+    public static void SetRegionParameter(DependencyObject obj, Dictionary<string, object> value)
+        => obj.SetValue(RegionParameterProperty, value);
 }
