@@ -65,8 +65,8 @@
         </ContentControl>
         <!--  Test Grid  -->
         <Grid Grid.Row="1" regions:RegionManager.RegionName="MainGridRegion">
-            <view:PageA regions:RegionManager.AddToRegion="MainGridRegion,/PageAa" />
-            <view:PageB regions:RegionManager.AddToRegion="MainGridRegion,/PageBa" Visibility="Collapsed" />
+            <view:PageA regions:RegionManager.AddToRegion="MainGridRegion,/GridA" />
+            <view:PageB regions:RegionManager.AddToRegion="MainGridRegion,/GridB" Visibility="Collapsed" />
         </Grid>
     </Grid>
 </Window>
