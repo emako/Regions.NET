@@ -4,6 +4,11 @@ using System.Windows.Controls;
 
 namespace Regions;
 
+/// <summary>
+/// RegionAdapter adapts region navigation to different UI containers in WPF.
+/// Supported containers: ContentControl, Grid, StackPanel, ItemsControl, Frame, etc.
+/// To support a new container, add a new branch in RequestNavigate.
+/// </summary>
 public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : IRegionAdapter
 {
     private readonly IRegion _region = region;
@@ -14,6 +19,7 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
     {
         object content = Resolve(uri);
 
+        // ContentControl: set Content property to the resolved view
         if (_region.Container is ContentControl contentControl)
         {
             if (contentControl.Content is INavigationAware navigationAwareView)
@@ -24,6 +30,7 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
 
             contentControl.Content = content;
         }
+        // Grid: add the view as a child and show only the target element
         else if (_region.Container is Grid grid)
         {
             if (content is UIElement element)
@@ -54,6 +61,7 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
                             navigationAwareViewModel.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
             }
         }
+        // StackPanel: add the view as a child and show only the target element
         else if (_region.Container is StackPanel stackPanel)
         {
             if (content is UIElement element)
@@ -84,11 +92,13 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
                             navigationAwareViewModel.OnNavigatedTo(_region.NavigationService.Journal.CurrentEntry);
             }
         }
+        // ItemsControl: add the resolved view to Items collection
         else if (_region.Container is ItemsControl itemsControl)
         {
             if (!itemsControl.Items.Contains(content))
                 itemsControl.Items.Add(content);
         }
+        // Frame: use Frame.Navigate to switch content
         else if (_region.Container is Frame frame)
         {
             if (frame.Content is INavigationAware navigationAwareView)
@@ -100,6 +110,7 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
             frame.Navigate(content);
         }
 
+        // Notify the new view or its ViewModel about navigation
         {
             if (content is INavigationAware navigationAwareView)
                 navigationAwareView.OnNavigatedTo((uri, navigationParameters));
@@ -109,6 +120,9 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
         }
     }
 
+    /// <summary>
+    /// Resolve the view instance for the given URI
+    /// </summary>
     public object Resolve(Uri uri)
     {
         object view = _region.GetView(uri?.OriginalString);

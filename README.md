@@ -10,10 +10,18 @@
 - 支持 INavigationAware 生命周期事件（OnNavigatedFrom/OnNavigatedTo）
 - 支持页面持有策略（AddSingleton/AddScoped/AddTransient）
 
-## 页面持有策略说明
+## 页面策略
 - **AddSingleton**：页面实例全局唯一，始终持有，即使`重定向导航`也不会释放。
 - **AddScoped**：同一区域页面唯一，`回退导航`/`前进导航`都能维持页面实例。
 - **AddTransient**：每次导航`新建实例`，回退后不再持有，`重定向导航`后页面可被释放。
+
+## 区域适配
+
+支持多种容器类型的区域适配：可扩展适配 ContentControl、ItemsControl、TabControl 等，注册机制自动关联容器与适配器，满足不同 UI 需求。
+
+`src/Regions.WPF/RegionAdapter.cs` 是本库的核心组件之一，负责将区域（Region）机制适配到不同类型的容器控件（如 ContentControl、ItemsControl、TabControl 等）。
+
+通过自定义 RegionAdapter，可以让区域管理器灵活支持多种 UI 容器，极大提升了扩展性和兼容性。
 
 ## 快速用法
 
