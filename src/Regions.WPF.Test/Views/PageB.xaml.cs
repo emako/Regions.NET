@@ -18,12 +18,12 @@ public partial class PageB : UserControl, INavigationAware
     }
 
     /// <inheritdoc />
-    public void OnNavigatedFrom((Uri, object) entry)
+    public void OnNavigatedFrom(RegionNavigationEntry entry)
     {
     }
 
     /// <inheritdoc />
-    public void OnNavigatedTo((Uri, object) entry)
+    public void OnNavigatedTo(RegionNavigationEntry entry)
     {
     }
 }

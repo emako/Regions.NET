@@ -9,8 +9,8 @@ namespace Regions;
 /// </summary>
 public class RegionNavigationJournal : IRegionNavigationJournal
 {
-    private readonly Stack<(Uri, object)> _backStack = new();
-    private readonly Stack<(Uri, object)> _forwardStack = new();
+    private readonly Stack<RegionNavigationEntry> _backStack = new();
+    private readonly Stack<RegionNavigationEntry> _forwardStack = new();
 
     /// <inheritdoc />
     public bool CanGoBack => _backStack.Count > 0;
@@ -19,7 +19,7 @@ public class RegionNavigationJournal : IRegionNavigationJournal
     public bool CanGoForward => _forwardStack.Count > 0;
 
     /// <inheritdoc />
-    public (Uri, object) CurrentEntry { get; protected set; }
+    public RegionNavigationEntry CurrentEntry { get; protected set; }
 
     /// <inheritdoc />
     public INavigateAsync NavigationTarget { get; set; }
@@ -47,7 +47,7 @@ public class RegionNavigationJournal : IRegionNavigationJournal
     }
 
     /// <inheritdoc />
-    public void RecordNavigation((Uri, object) entry, bool persistInHistory)
+    public void RecordNavigation(RegionNavigationEntry entry, bool persistInHistory)
     {
         if (entry == (default, default))
             return;

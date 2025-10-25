@@ -18,13 +18,13 @@ public partial class PageA : UserControl, INavigationAware
     }
 
     /// <inheritdoc />
-    public void OnNavigatedFrom((Uri, object) entry)
+    public void OnNavigatedFrom(RegionNavigationEntry entry)
     {
         Dictionary<string, object> value = RegionManager.GetRegionParameter(this);
     }
 
     /// <inheritdoc />
-    public void OnNavigatedTo((Uri, object) entry)
+    public void OnNavigatedTo(RegionNavigationEntry entry)
     {
         Dictionary<string, object> value = RegionManager.GetRegionParameter(this);
     }

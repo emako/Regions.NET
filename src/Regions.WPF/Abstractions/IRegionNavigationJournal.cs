@@ -24,7 +24,7 @@ public interface IRegionNavigationJournal
     /// Current navigation entry.
     /// 当前导航条目。
     /// </summary>
-    public (Uri, object) CurrentEntry { get; }
+    public RegionNavigationEntry CurrentEntry { get; }
 
     /// <summary>
     /// The target that executes navigation actions.
@@ -50,7 +50,7 @@ public interface IRegionNavigationJournal
     /// </summary>
     /// <param name="entry">The entry to record. 要记录的条目。</param>
     /// <param name="persistInHistory">Whether to persist current entry in back history. 是否将当前条目写入后退历史。</param>
-    public void RecordNavigation((Uri, object) entry, bool persistInHistory);
+    public void RecordNavigation(RegionNavigationEntry entry, bool persistInHistory);
 
     /// <summary>
     /// Clears all history and the current entry.
