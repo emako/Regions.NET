@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Regions;
+namespace Regions.Abstractions;
 
 /// <summary>
 /// Registry for mapping navigation keys to view types.

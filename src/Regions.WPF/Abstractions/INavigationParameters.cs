@@ -1,4 +1,4 @@
-﻿namespace Regions;
+﻿namespace Regions.Abstractions;
 
 /// <summary>
 /// Marker interface for navigation parameters passed between views.

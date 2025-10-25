@@ -1,4 +1,6 @@
-﻿namespace Regions;
+﻿using Regions.Abstractions;
+
+namespace Regions;
 
 /// <summary>
 /// Default navigation parameters implementation (empty marker type).

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Regions;
+namespace Regions.Abstractions;
 
 /// <summary>
 /// Represents a logical region that hosts views and supports navigation.

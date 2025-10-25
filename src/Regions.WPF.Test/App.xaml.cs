@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Regions.Abstractions;
 using Regions.Test.Views;
 using System.Windows;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Regions;
+namespace Regions.Abstractions;
 
 /// <summary>
 /// Provides navigation services for a region.

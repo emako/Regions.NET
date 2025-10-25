@@ -1,4 +1,4 @@
-﻿namespace Regions;
+﻿namespace Regions.Abstractions;
 
 /// <summary>
 /// Adapts navigation requests to a specific region container.

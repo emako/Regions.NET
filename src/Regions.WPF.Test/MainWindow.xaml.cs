@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using Regions.Abstractions;
+using System.Windows;
 
 namespace Regions.Test;
 

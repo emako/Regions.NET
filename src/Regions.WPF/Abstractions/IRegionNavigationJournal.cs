@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Regions;
+namespace Regions.Abstractions;
 
 /// <summary>
 /// Records navigation history and supports back/forward operations.

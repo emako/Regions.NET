@@ -1,6 +1,4 @@
-using System;
-
-namespace Regions;
+namespace Regions.Abstractions;
 
 /// <summary>
 /// Receives notifications about navigation events for views or view models.

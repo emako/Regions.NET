@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Regions;
+namespace Regions.Abstractions;
 
 /// <summary>
 /// Manages regions and coordinates navigation between views.

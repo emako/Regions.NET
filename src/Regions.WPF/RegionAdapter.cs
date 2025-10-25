@@ -1,3 +1,4 @@
+using Regions.Abstractions;
 using Regions.Extensions;
 using System;
 using System.Windows;

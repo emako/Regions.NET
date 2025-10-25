@@ -1,6 +1,6 @@
 using System;
 
-namespace Regions;
+namespace Regions.Abstractions;
 
 /// <summary>
 /// Represents a component capable of initiating navigation to a target.

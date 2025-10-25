@@ -1,3 +1,4 @@
+using Regions.Abstractions;
 using System.Windows.Controls;
 
 namespace Regions.Test.Views;
