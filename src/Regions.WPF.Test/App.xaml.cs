@@ -4,15 +4,27 @@ using System.Windows;
 
 namespace Regions.Test;
 
+/// <summary>
+/// WPF test application that sets up DI and Regions infrastructure.
+/// WPF 测试应用：配置依赖注入与 Regions 基础设施。
+/// </summary>
 public partial class App : Application, IServiceProvider
 {
     public static IServiceProvider? ServiceProvider { get; private set; }
 
+    /// <summary>
+    /// IServiceProvider implementation proxying to the configured ServiceProvider.
+    /// IServiceProvider 实现：代理到已配置的 ServiceProvider。
+    /// </summary>
     public object? GetService(Type serviceType)
     {
         return ServiceProvider!.GetService(serviceType);
     }
 
+    /// <summary>
+    /// Gets a required service using the underlying ServiceProvider.
+    /// 使用内部的 ServiceProvider 获取必需服务。
+    /// </summary>
     public T GetRequiredService<T>() where T : notnull
     {
         return ServiceProvider!.GetRequiredService<T>();

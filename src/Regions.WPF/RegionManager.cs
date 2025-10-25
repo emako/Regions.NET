@@ -7,11 +7,22 @@ using System.Windows;
 
 namespace Regions;
 
+/// <summary>
+/// Default implementation of <see cref="IRegionManager"/>.
+/// 区域管理器默认实现：负责注册区域并协调导航与历史。
+/// </summary>
 public partial class RegionManager : IRegionManager
 {
+    /// <summary>
+    /// Stores regions by their names.
+    /// 以名称存储区域的字典。
+    /// </summary>
     public Dictionary<string, IRegion> RegionDictionary = [];
+
+    /// <inheritdoc />
     public IEnumerable<object> Regions => RegionDictionary.Values;
 
+    /// <inheritdoc />
     public IRegionManager AddToRegion(string regionName, object view)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))
@@ -21,6 +32,7 @@ public partial class RegionManager : IRegionManager
         return this;
     }
 
+    /// <inheritdoc />
     public void RequestNavigate(string regionName, Uri target, object navigationParameters = null)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))
@@ -29,6 +41,7 @@ public partial class RegionManager : IRegionManager
         }
     }
 
+    /// <inheritdoc />
     public void RequestRedirect(string regionName, Uri target, object navigationParameters = null)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))
@@ -45,6 +58,7 @@ public partial class RegionManager : IRegionManager
         RequestNavigate(regionName, target, navigationParameters);
     }
 
+    /// <inheritdoc />
     public void RequestGoBack(string regionName)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region)
@@ -70,6 +84,7 @@ public partial class RegionManager : IRegionManager
         }
     }
 
+    /// <inheritdoc />
     public void RequestGoForward(string regionName)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region)
@@ -84,12 +99,24 @@ public partial class RegionManager : IRegionManager
 
 public partial class RegionManager
 {
+    /// <summary>
+    /// Attached property to declare a region name on a WPF element.
+    /// 附加属性：在 WPF 元素上声明区域名称。
+    /// </summary>
     public static readonly DependencyProperty RegionNameProperty =
         DependencyProperty.RegisterAttached("RegionName", typeof(string), typeof(RegionManager), new(null, OnRegionNameChanged));
 
+    /// <summary>
+    /// Gets the region name from an element.
+    /// 从元素获取区域名称。
+    /// </summary>
     public static string GetRegionName(DependencyObject obj)
         => (string)obj.GetValue(RegionNameProperty);
 
+    /// <summary>
+    /// Sets the region name to an element.
+    /// 为元素设置区域名称。
+    /// </summary>
     public static void SetRegionName(DependencyObject obj, string value)
         => obj.SetValue(RegionNameProperty, value);
 
@@ -110,12 +137,24 @@ public partial class RegionManager
         }
     }
 
+    /// <summary>
+    /// Attached property to add an element to a region with an initial view.
+    /// 附加属性：将元素添加到某个区域，并指定初始视图。
+    /// </summary>
     public static readonly DependencyProperty AddToRegionProperty =
         DependencyProperty.RegisterAttached("AddToRegion", typeof(string), typeof(RegionManager), new(null, OnAddToRegionChanged));
 
+    /// <summary>
+    /// Gets the AddToRegion value.
+    /// 获取 AddToRegion 的值。
+    /// </summary>
     public static string GetAddToRegion(DependencyObject obj)
         => (string)obj.GetValue(AddToRegionProperty);
 
+    /// <summary>
+    /// Sets the AddToRegion value.
+    /// 设置 AddToRegion 的值。
+    /// </summary>
     public static void SetAddToRegion(DependencyObject obj, string value)
         => obj.SetValue(AddToRegionProperty, value);
 
@@ -143,13 +182,24 @@ public partial class RegionManager
         }
     }
 
-    // RegionParameter stores navigation parameters for each region instance
+    /// <summary>
+    /// Attached property to store navigation parameters for each region instance.
+    /// 附加属性：为每个区域实例存储导航参数。
+    /// </summary>
     public static readonly DependencyProperty RegionParameterProperty =
         DependencyProperty.RegisterAttached("RegionParameter", typeof(Dictionary<string, object>), typeof(RegionManager), new PropertyMetadata(null));
 
+    /// <summary>
+    /// Gets region parameters from an element.
+    /// 从元素获取区域参数。
+    /// </summary>
     public static Dictionary<string, object> GetRegionParameter(DependencyObject obj)
         => (Dictionary<string, object>)obj.GetValue(RegionParameterProperty);
 
+    /// <summary>
+    /// Sets region parameters to an element.
+    /// 为元素设置区域参数。
+    /// </summary>
     public static void SetRegionParameter(DependencyObject obj, Dictionary<string, object> value)
         => obj.SetValue(RegionParameterProperty, value);
 }

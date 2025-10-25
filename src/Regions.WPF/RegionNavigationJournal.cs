@@ -3,16 +3,28 @@ using System.Collections.Generic;
 
 namespace Regions;
 
+/// <summary>
+/// In-memory navigation journal with back/forward stacks.
+/// 区域导航日志：使用内存栈维护前进/后退历史。
+/// </summary>
 public class RegionNavigationJournal : IRegionNavigationJournal
 {
     private readonly Stack<(Uri, object)> _backStack = new();
     private readonly Stack<(Uri, object)> _forwardStack = new();
 
+    /// <inheritdoc />
     public bool CanGoBack => _backStack.Count > 0;
+
+    /// <inheritdoc />
     public bool CanGoForward => _forwardStack.Count > 0;
+
+    /// <inheritdoc />
     public (Uri, object) CurrentEntry { get; protected set; }
+
+    /// <inheritdoc />
     public INavigateAsync NavigationTarget { get; set; }
 
+    /// <inheritdoc />
     public void GoBack()
     {
         if (CanGoBack)
@@ -23,6 +35,7 @@ public class RegionNavigationJournal : IRegionNavigationJournal
         }
     }
 
+    /// <inheritdoc />
     public void GoForward()
     {
         if (CanGoForward)
@@ -33,6 +46,7 @@ public class RegionNavigationJournal : IRegionNavigationJournal
         }
     }
 
+    /// <inheritdoc />
     public void RecordNavigation((Uri, object) entry, bool persistInHistory)
     {
         if (entry == (default, default))
@@ -45,6 +59,7 @@ public class RegionNavigationJournal : IRegionNavigationJournal
         _forwardStack.Clear();
     }
 
+    /// <inheritdoc />
     public void Clear()
     {
         _backStack.Clear();
