@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Regions;
+namespace Regions.Extensions;
 
 public static class UriExtension
 {
