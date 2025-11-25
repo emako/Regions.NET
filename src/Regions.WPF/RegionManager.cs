@@ -24,6 +24,12 @@ public partial class RegionManager : IRegionManager
     public IEnumerable<object> Regions => RegionDictionary.Values;
 
     /// <inheritdoc />
+    public void ClearRegions()
+    {
+        RegionDictionary.Clear();
+    }
+
+    /// <inheritdoc />
     public IRegionManager AddToRegion(string regionName, object view)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))

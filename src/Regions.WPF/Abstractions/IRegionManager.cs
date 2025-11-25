@@ -16,6 +16,12 @@ public interface IRegionManager
     public IEnumerable<object> Regions { get; }
 
     /// <summary>
+    /// Clears all regions.
+    /// 清空所有区域。
+    /// </summary>
+    public void ClearRegions();
+
+    /// <summary>
     /// Adds a view to the specified region.
     /// 将视图添加到指定区域。
     /// </summary>
