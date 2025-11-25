@@ -30,6 +30,13 @@ public partial class RegionManager : IRegionManager
     }
 
     /// <inheritdoc />
+    public IRegionManager RemoveRegion(string regionName)
+    {
+        RegionDictionary.Remove(regionName);
+        return this;
+    }
+
+    /// <inheritdoc />
     public IRegionManager AddToRegion(string regionName, object view)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))

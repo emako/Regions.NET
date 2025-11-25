@@ -22,6 +22,14 @@ public interface IRegionManager
     public void ClearRegions();
 
     /// <summary>
+    /// Removes the specified region.
+    /// 移除指定区域。
+    /// </summary>
+    /// <param name="regionName">Region name. 区域名称。</param>
+    /// <returns>The region manager. 区域管理器。</returns>
+    public IRegionManager RemoveRegion(string regionName);
+
+    /// <summary>
     /// Adds a view to the specified region.
     /// 将视图添加到指定区域。
     /// </summary>
