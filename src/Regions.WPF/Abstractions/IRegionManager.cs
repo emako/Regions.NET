@@ -39,16 +39,6 @@ public interface IRegionManager
     public IRegionManager AddRegion(string regionName, object view);
 
     /// <summary>
-    /// Adds a view to the specified region.
-    /// 将视图添加到指定区域。
-    /// </summary>
-    /// <param name="regionName">Region name. 区域名称。</param>
-    /// <param name="view">View instance. 视图实例。</param>
-    /// <returns>The region manager. 区域管理器。</returns>
-    [Obsolete("Use AddRegion instead")]
-    public IRegionManager AddToRegion(string regionName, object view);
-
-    /// <summary>
     /// Requests navigation within a region.
     /// 请求在区域内进行导航。
     /// </summary>

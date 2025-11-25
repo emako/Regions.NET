@@ -45,18 +45,6 @@ public partial class RegionManager : IRegionManager
     }
 
     /// <inheritdoc />
-    public IRegionManager AddToRegion(string regionName, object view)
-    {
-        // TODO: Consider deleting this method 考虑删除本方法
-
-        if (RegionDictionary.TryGetValue(regionName, out IRegion region))
-            region.Add(view, regionName);
-        else
-            RegionDictionary.Add(regionName, view as IRegion);
-        return this;
-    }
-
-    /// <inheritdoc />
     public void RequestNavigate(string regionName, Uri target, object navigationParameters = null)
     {
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))
