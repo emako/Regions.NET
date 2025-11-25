@@ -36,11 +36,26 @@ services.AddTransient<PageB>();
 ```
 
 ### 2. XAML 声明 Region
+
+* 可使用 `RegionName` 附加属性声明 Region。
+
 ```xml
 <ContentControl regions:RegionManager.RegionName="MainRegion" />
 ```
 
+添加的 Region 可以用 `IRegionManager.RemoveRegion` / `IRegionManager.ClearRegions` 手动清理。
+
+* 可使用 `AddToRegion` 附加属性将带有名称的控件添加到指定 Region。
+
+```xaml
+<Grid regions:RegionManager.RegionName="MainRegion">
+    <Grid regions:RegionManager.AddToRegion="MainRegion,/ContentRegion"
+              regions:RegionManager.RegionName="ContentRegion" />
+</Grid>
+```
+
 ### 3. 导航页面
+
 ```csharp
 // 普通导航
 _regionManager.RequestNavigate("MainRegion", new Uri("/PageA", UriKind.Relative));
