@@ -37,8 +37,18 @@ public partial class RegionManager : IRegionManager
     }
 
     /// <inheritdoc />
+    public IRegionManager AddRegion(string regionName, object view)
+    {
+        RegionDictionary.Remove(regionName);
+        RegionDictionary.Add(regionName, view as IRegion);
+        return this;
+    }
+
+    /// <inheritdoc />
     public IRegionManager AddToRegion(string regionName, object view)
     {
+        // TODO: Consider deleting this method 考虑删除本方法
+
         if (RegionDictionary.TryGetValue(regionName, out IRegion region))
             region.Add(view, regionName);
         else
@@ -146,7 +156,7 @@ public partial class RegionManager
                     Container = d,
                 };
                 IRegionManager regionManager = (IRegionManager)serviceProvider.GetService(typeof(IRegionManager));
-                regionManager.AddToRegion(regionName, region);
+                regionManager.AddRegion(regionName, region);
             }
         }
     }
