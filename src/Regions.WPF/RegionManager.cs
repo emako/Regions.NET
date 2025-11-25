@@ -24,9 +24,10 @@ public partial class RegionManager : IRegionManager
     public IEnumerable<object> Regions => RegionDictionary.Values;
 
     /// <inheritdoc />
-    public void ClearRegions()
+    public IRegionManager ClearRegions()
     {
         RegionDictionary.Clear();
+        return this;
     }
 
     /// <inheritdoc />

@@ -19,7 +19,8 @@ public interface IRegionManager
     /// Clears all regions.
     /// 清空所有区域。
     /// </summary>
-    public void ClearRegions();
+    /// <returns>The region manager. 区域管理器。</returns>
+    public IRegionManager ClearRegions();
 
     /// <summary>
     /// Removes the specified region.
