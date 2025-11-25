@@ -21,6 +21,24 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     /// <summary>
+    /// Removes the UIElement from its current parent to allow re-parenting.
+    /// 从当前父元素中移除 UIElement，以允许重新父化。
+    /// </summary>
+    /// <param name="element">The UIElement to remove. 要移除的 UIElement。</param>
+    private static void RemoveFromParent(UIElement element)
+    {
+        var parent = LogicalTreeHelper.GetParent(element);
+        if (parent is Panel panel)
+            panel.Children.Remove(element);
+        else if (parent is ContentControl contentControl)
+            contentControl.Content = null;
+        else if (parent is ItemsControl itemsControl)
+            itemsControl.Items.Remove(element);
+        else if (parent is Frame frame)
+            frame.Content = null;
+    }
+
+    /// <summary>
     /// Executes navigation for the region container to show the view resolved by the Uri.
     /// 执行区域容器的导航，展示由 Uri 解析得到的视图。
     /// </summary>
@@ -43,6 +61,9 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
                 && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
                 navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
 
+            if (content is UIElement uiElement)
+                RemoveFromParent(uiElement);
+
             contentControl.Content = content;
         }
         // Grid: add the view as a child and show only the target element
@@ -58,6 +79,8 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
                         else if (elementEach is FrameworkElement frameworkElement
                             && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
                             navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+
+                RemoveFromParent(element);
 
                 if (!grid.Children.Contains(element))
                     grid.Children.Add(element);
@@ -91,6 +114,8 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
                             && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
                             navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
 
+                RemoveFromParent(element);
+
                 if (!stackPanel.Children.Contains(element))
                     stackPanel.Children.Add(element);
 
@@ -113,6 +138,9 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
         // ItemsControl：将解析出的视图添加到 Items 集合
         else if (_region.Container is ItemsControl itemsControl)
         {
+            if (content is UIElement uiElement)
+                RemoveFromParent(uiElement);
+
             if (!itemsControl.Items.Contains(content))
                 itemsControl.Items.Add(content);
         }
@@ -125,6 +153,9 @@ public class RegionAdapter(IRegion region, IServiceProvider serviceProvider) : I
             else if (frame.Content is FrameworkElement frameworkElement
                 && frameworkElement.DataContext is INavigationAware navigationAwareViewModel)
                 navigationAwareViewModel.OnNavigatedFrom(_region.NavigationService.Journal.CurrentEntry);
+
+            if (content is UIElement uiElement)
+                RemoveFromParent(uiElement);
 
             frame.Navigate(content);
         }
