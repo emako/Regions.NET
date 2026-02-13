@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Regions.WPF.Test/Regions.WPF.Test.csproj" />
+  <Project Path="src/Regions.WPF/Regions.WPF.csproj" />
+</Solution>
